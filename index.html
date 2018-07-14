@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+    crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>Rock Paper Scissors</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron py-4">
+      <h1 class="text-center">R
+        <i class="far fa-hand-rock fa-rotate-90"></i>
+        ck P
+        <i class="far fa-hand-paper"></i>per Scisso
+        <i class="far fa-hand-scissors fa-flip-horizontal"></i>s</h1>
+    </div>
+  </div>
+  <form class="form-inline justify-content-center mb-3">
+    <div class="form-group">
+      <input type="text" class="form-control mr-2" id="inputName" placeholder="Name">
+    </div>
+    <button type="submit" class="join btn btn-success">Join</button>
+  </form>
+  <div class="container">
+    <div class="row game">
+      <div class="m-3 player1 col-sm"></div>
+      <div class="m-3 result col-sm"></div>
+      <div class="m-3 player2 col-sm"></div>
+    </div>
+  </div>
+  <div class="container">
+  </div>
+
+
+  </div>
+  <div class="container">
+    <div class="chatBox my-3 mx-auto">
+      <p class="chat"></p>
+    </div>
+    <form class="form-inline justify-content-center">
+      <div class="form-group chat">
+        <input type="text" class="chat form-control mr-2" placeholder="Message...">
+        <button type="submit" class="chat btn btn-success">Send</button>
+      </div>
+    </form>
+  </div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+  <script src="./assets/scripts/app.js"></script>
+</body>
+
+</html>
