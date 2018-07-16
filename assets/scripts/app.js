@@ -263,6 +263,14 @@
       }
       console.log('compareChoice:', this.choice1);
     },
+    disconnect: function() {
+      database.ref().on('value', function() {
+        database
+          .ref()
+          .onDisconnect()
+          .set({});
+      });
+    },
     play: function() {
       $('.score2').addClass('d-none');
       database.ref().on('value', snapshot => {
@@ -363,7 +371,6 @@
           this.choice2 = data.players.player2.choice;
 
           if (this.choice1 && this.choice2) {
-            console.log('both players made a choice');
             this.compare();
           }
         }
@@ -372,8 +379,8 @@
   };
 
   game.init();
-
   game.play();
+  game.disconnect();
 
   // join.on('click', function(e) {
   //   e.preventDefault();
