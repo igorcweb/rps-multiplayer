@@ -52,6 +52,7 @@
         const name = nameInput.val().trim();
         const joinForm = $('form.join');
         let name1 = this.player1;
+        let name2 = this.player2;
         if (name1 === '') {
           name1 = name;
           joinForm.addClass('d-none');
@@ -86,17 +87,15 @@
             turn: 1
           });
           //change direction
-          $('.rock2').html('<i class="far fa-hand-rock fa-rotate-90"></i>');
-          $('.paper2').html('<i class="far fa-hand-paper fa-rotate-90"></i>');
-          $('.scissors2').html(
-            '<i class="far fa-hand-scissors fa-flip-horizontal"></i>'
-          );
+          $('.rock2').html('<i class="far fa-hand-rock fa-rotate-270"></i>');
+          $('.paper2').html('<i class="far fa-hand-paper fa-rotate-270"></i>');
+          $('.scissors2').html('<i class="far fa-hand-scissors"></i>');
         }
-        nameInput.val('');
+        // nameInput.val('');
       });
     },
     play: function() {
-      $('.score1').addClass('d-none');
+      $('.score2').addClass('d-none');
       database.ref().on('value', snapshot => {
         if (
           snapshot
@@ -109,7 +108,93 @@
           console.log(data.players.player1.name);
           this.player1 = data.players.player1.name;
           this.wins1 = data.players.player1.wins;
-          this.player1 = data.players.player1.losses;
+          this.losses1 = data.players.player1.losses;
+          $('.name1').html(this.player1);
+          $('.score1').html(`
+            <p class="my-0">Wins: ${this.wins1}</p>
+            <p class="my-0">Losses: ${this.losses1}</p>
+          `);
+        }
+        if (
+          snapshot
+            .child('players')
+            .child('player2')
+            .exists()
+        ) {
+          $('.score2').removeClass('d-none');
+          let data = snapshot.val();
+          console.log(this.player2);
+          console.log(data.players.player2.name);
+          this.player2 = data.players.player2.name;
+          this.wins2 = data.players.player2.wins;
+          this.losses2 = data.players.player2.losses;
+          $('.name2').html(this.player2);
+          $('.score1').html(`
+            <p class="my-0">Wins: ${this.wins2}</p>
+            <p class="my-0">Losses: ${this.losses2}</p>
+          `);
+        } else {
+          // const score2 = $('.score2');
+          // score2.text('Your opponent left - Click to restart.');
+          // score2.append(
+          //   '<button class="btn btn-success restart">Play Again</button>'
+          // );
+          // $('.restart').on('click', function() {
+          //   location.reload();
+          // });
+        }
+        if (
+          snapshot
+            .child('players')
+            .child('player1')
+            .exists() &&
+          snapshot
+            .child('players')
+            .child('player2')
+            .exists()
+        ) {
+          let data = snapshot.val();
+          let turn = data.turn;
+          console.log('turn:', turn);
+          const turnDiv = $('.turn');
+          if (turn === 1) {
+            turnDiv.html(`<p>${this.player1}'s turn!</p>`);
+            $('.choice1').on('click', function() {
+              game.choice1 = $(this).attr('data-choice');
+              database
+                .ref('players')
+                .child('player1')
+                .update({
+                  choice: game.choice1
+                });
+              database.ref().update({
+                turn: 2
+              });
+              $('.choice1').off('click');
+            });
+          }
+          if (turn === 2) {
+            turnDiv.html(`<p>${this.player2}'s turn!</p>`);
+            $('.choice2').on('click', function() {
+              game.choice2 = $(this).attr('data-choice');
+              database
+                .ref('players')
+                .child('player2')
+                .update({
+                  choice: game.choice2
+                });
+              database.ref().update({
+                turn: 1
+              });
+              $('.choice2').off('click');
+            });
+          }
+
+          this.choice1 = data.players.player1.choice;
+          this.choice2 = data.players.player2.choice;
+
+          console.log('choice1: ', this.choice1);
+          console.log('choice2: ', this.choice2);
         }
       });
     }
