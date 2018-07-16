@@ -94,6 +94,175 @@
         // nameInput.val('');
       });
     },
+    compare: function() {
+      switch (this.choice1) {
+        case 'rock':
+          if (this.choice2 === 'paper') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: '',
+                losses: this.losses1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                wins: this.wins2 + 1
+              });
+            $('.info').html(`<p>${this.player2} Wins!</p>`);
+          } else if (this.choice2 === 'scissors') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('one')
+              .update({
+                choice: '',
+                wins: this.wins1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                losses: this.losses2 + 1
+              });
+            $('.info').html(`<p>${this.player1} Wins!</p>`);
+          } else {
+            game.choice1 = '';
+            game.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: ''
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: ''
+              });
+            $('.info').html('<p>Tie!</p>');
+          }
+          break;
+        case 'paper':
+          if (this.choice2 === 'scissors') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: '',
+                losses: this.losses1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                wins: this.wins2 + 1
+              });
+            $('.info').html(`<p>${this.player2} Wins!</p>`);
+          } else if (this.choice2 === 'rock') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('one')
+              .update({
+                choice: '',
+                wins: this.wins1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                losses: this.losses2 + 1
+              });
+            $('.info').html(`<p>${this.player1} Wins!</p>`);
+          } else {
+            game.choice1 = '';
+            game.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: ''
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: ''
+              });
+            $('.info').html('<p>Tie!</p>');
+          }
+          break;
+        default:
+          if (this.choice2 === 'rock') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: '',
+                losses: this.losses1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                wins: this.wins2 + 1
+              });
+            $('.info').html(`<p>${this.player2} Wins!</p>`);
+          } else if (this.choice2 === 'paper') {
+            this.choice1 = '';
+            this.choice2 = '';
+            database
+              .ref('players')
+              .child('one')
+              .update({
+                choice: '',
+                wins: this.wins1 + 1
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: '',
+                losses: this.losses2 + 1
+              });
+            $('.info').html(`<p>${this.player1} Wins!</p>`);
+          } else {
+            game.choice1 = '';
+            game.choice2 = '';
+            database
+              .ref('players')
+              .child('player1')
+              .update({
+                choice: ''
+              });
+            database
+              .ref('players')
+              .child('player2')
+              .update({
+                choice: ''
+              });
+            $('.info').html('<p>Tie!</p>');
+          }
+      }
+      console.log('compareChoice:', this.choice1);
+    },
     play: function() {
       $('.score2').addClass('d-none');
       database.ref().on('value', snapshot => {
@@ -193,8 +362,10 @@
           this.choice1 = data.players.player1.choice;
           this.choice2 = data.players.player2.choice;
 
-          console.log('choice1: ', this.choice1);
-          console.log('choice2: ', this.choice2);
+          if (this.choice1 && this.choice2) {
+            console.log('both players made a choice');
+            this.compare();
+          }
         }
       });
     }
