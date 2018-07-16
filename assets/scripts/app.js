@@ -271,6 +271,25 @@
           .set({});
       });
     },
+    chat: function() {
+      $('button.chat').on('click', function(e) {
+        e.preventDefault();
+        let message = $('input.chat')
+          .val()
+          .trim();
+        if (message) {
+          database.ref('chat').push({
+            message: message
+          });
+          $('input.chat').val('');
+        }
+      });
+      database.ref('chat').on('child_added', childSnap => {
+        let childData = childSnap.val();
+        let message = childData.message;
+        $('.chatBox').prepend(`<p class="message">${message}</p>`);
+      });
+    },
     play: function() {
       $('.score2').addClass('d-none');
       database.ref().on('value', snapshot => {
@@ -381,6 +400,7 @@
   game.init();
   game.play();
   game.disconnect();
+  game.chat();
 
   // join.on('click', function(e) {
   //   e.preventDefault();
