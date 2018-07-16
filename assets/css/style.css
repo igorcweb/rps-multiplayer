@@ -33,15 +33,15 @@ h1 {
 .player2 {
   background-color: #fff;
   height: 14rem;
-  border: 2px solid #aaa;
-  border-radius: 5px;
+  border: 2px solid #c3c3c3;
+  border-radius: 6px;
 }
 
 .chatBox {
   background-color: #fff;
   height: 10rem;
-  border: 2px solid #aaa;
-  border-radius: 5px;
+  border: 2px solid #c3c3c3;
+  border-radius: 6px;
 }
 
 .form-control.chat {
