@@ -51,8 +51,8 @@
               player1: {
                 name: name1,
                 choice: '',
-                wins: 0,
-                losses: 0
+                wins: this.wins1,
+                losses: this.losses1
               }
             }
           });
@@ -67,8 +67,8 @@
             player2: {
               name: name2,
               choice: '',
-              wins: 0,
-              losses: 0
+              wins: this.wins2,
+              losses: this.losses2
             }
           });
 
@@ -105,7 +105,7 @@
             this.choice2 = '';
             database
               .ref('players')
-              .child('one')
+              .child('player1')
               .update({ choice: '', wins: this.wins1 + 1 });
             database
               .ref('players')
@@ -144,7 +144,7 @@
             this.choice2 = '';
             database
               .ref('players')
-              .child('one')
+              .child('player1')
               .update({ choice: '', wins: this.wins1 + 1 });
             database
               .ref('players')
@@ -183,7 +183,7 @@
             this.choice2 = '';
             database
               .ref('players')
-              .child('one')
+              .child('player1')
               .update({ choice: '', wins: this.wins1 + 1 });
             database
               .ref('players')
@@ -203,6 +203,7 @@
               .update({ choice: '' });
             $('.info').html('<h2>Tie!</h2>');
           }
+          break;
       }
       game.choice.removeClass('active');
     },
