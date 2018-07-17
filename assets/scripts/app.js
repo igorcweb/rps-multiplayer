@@ -86,6 +86,10 @@
     },
     compare: function() {
       $('.resultIcons').removeClass('d-none');
+      setTimeout(function() {
+        $('.info').html('');
+      }, 3000);
+      game.choice.removeClass('active');
       switch (this.choice1) {
         case 'rock':
           if (this.choice2 === 'paper') {
@@ -99,6 +103,7 @@
               .ref('players')
               .child('player2')
               .update({ choice: '', wins: this.wins2 + 1 });
+
             $('.info').html(`<h2>${this.player2} Wins!</h2>`);
           } else if (this.choice2 === 'scissors') {
             this.choice1 = '';
@@ -205,7 +210,6 @@
           }
           break;
       }
-      game.choice.removeClass('active');
     },
     disconnect: function() {
       database.ref().on('value', function() {
@@ -327,7 +331,6 @@
             turnDiv.html(`<p>${this.player2}'s turn!</p>`);
             $('.player2').on('click', '.choice2', function() {
               game.choice = $(this);
-              game.choice.addClass('active');
               game.choice2 = $(this).attr('data-choice');
               game.choice2record = game.choice2;
               database
