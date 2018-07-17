@@ -28,9 +28,18 @@ h1 {
   width: 300px;
 }
 
+.btn.leave {
+  margin-top: -20px;
+  margin-bottom: 20px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .player1,
 .result,
 .player2 {
+  position: relative;
   background-color: #fff;
   height: 14rem;
   border: 2px solid #c3c3c3;
@@ -64,6 +73,37 @@ p.message {
 .btn.chat {
   position: relative;
   bottom: 2px;
+}
+
+i.game1,
+i.game2 {
+  font-size: 3rem;
+  position: absolute;
+  cursor: pointer;
+}
+
+i.game1.fa-hand-rock {
+  right: 3rem;
+}
+i.game1.fa-hand-paper {
+  right: 1.1rem;
+  top: 5.5rem;
+}
+i.game1.fa-hand-scissors {
+  right: 1.1rem;
+  top: 9.3rem;
+}
+
+i.game2.fa-hand-rock {
+  left: 2.8rem;
+}
+i.game2.fa-hand-paper {
+  left: 3rem;
+  top: 5.5rem;
+}
+i.game2.fa-hand-scissors {
+  left: 2.7rem;
+  top: 9.1rem;
 }
 
 /* Small devices (landscape phones, 576px and up) */

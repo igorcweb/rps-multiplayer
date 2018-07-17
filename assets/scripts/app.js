@@ -12,29 +12,6 @@
 
   const database = firebase.database();
 
-  // const join = $('.join');
-  // const nameInput = $('#inputName');
-  // const joinForm = $('form.join');
-
-  // let data;
-  // let numPlayers;
-  // let playerRef;
-
-  // database.ref().on('value', function(snap) {
-  //   data = snap.val();
-  //   if (data) console.log(data.rps.players);
-  //   console.log('data: ', data);
-  //   numPlayers = 0;
-  //   if (data) {
-  //     for (player in data.rps.players) {
-  //       numPlayers++;
-  //       //Remove disconnected player
-  //       playerRef = database.ref(`data/rps/players/${player}`);
-  //     }
-  //     playerRef.onDisconnect().remove();
-  //   }
-  // });
-
   const game = {
     player1: '',
     wins1: 0,
@@ -46,7 +23,7 @@
     rps2: '',
 
     init: function() {
-      $('button.join').on('click', e => {
+      $('.btn.join').on('click', e => {
         e.preventDefault();
         const nameInput = $('#inputName');
         const name = nameInput.val().trim();
@@ -56,6 +33,7 @@
         if (name1 === '') {
           name1 = name;
           joinForm.addClass('d-none');
+          $('button.leave').removeClass('d-none');
           database.ref().set({
             chat: '',
             players: {
@@ -67,14 +45,19 @@
               }
             }
           });
-          $('.rock1').html('<i class="far fa-hand-rock fa-rotate-90"></i>');
-          $('.paper1').html('<i class="far fa-hand-paper fa-rotate-90"></i>');
+          $('.rock1').html(
+            '<i class="game1 far fa-hand-rock fa-rotate-90"></i>'
+          );
+          $('.paper1').html(
+            '<i class="game1 far fa-hand-paper fa-rotate-90"></i>'
+          );
           $('.scissors1').html(
-            '<i class="far fa-hand-scissors fa-flip-horizontal"></i>'
+            '<i class="game1 far fa-hand-scissors fa-flip-horizontal"></i>'
           );
         } else if (name2 === '') {
           name2 = name;
           joinForm.addClass('d-none');
+          $('button.leave').removeClass('d-none');
           database.ref('/players').update({
             player2: {
               name: name2,
@@ -83,15 +66,23 @@
               losses: 0
             }
           });
+
           database.ref().update({
             turn: 1
           });
-          //change direction
-          $('.rock2').html('<i class="far fa-hand-rock fa-rotate-270"></i>');
-          $('.paper2').html('<i class="far fa-hand-paper fa-rotate-270"></i>');
-          $('.scissors2').html('<i class="far fa-hand-scissors"></i>');
+
+          $('.rock2').html(
+            '<i class="game2 far fa-hand-rock fa-rotate-270"></i>'
+          );
+          $('.paper2').html(
+            '<i class="game2 far fa-hand-paper fa-rotate-270"></i>'
+          );
+          $('.scissors2').html('<i class="game2 far fa-hand-scissors"></i>');
+        } else {
+          $('.turn').html(
+            '<p>Two players are currently playing. Please wait until someone leaves.</p>'
+          );
         }
-        // nameInput.val('');
       });
     },
     compare: function() {
@@ -325,19 +316,10 @@
           this.wins2 = data.players.player2.wins;
           this.losses2 = data.players.player2.losses;
           $('.name2').html(this.player2);
-          $('.score1').html(`
+          $('.score2').html(`
             <p class="my-0">Wins: ${this.wins2}</p>
             <p class="my-0">Losses: ${this.losses2}</p>
           `);
-        } else {
-          // const score2 = $('.score2');
-          // score2.text('Your opponent left - Click to restart.');
-          // score2.append(
-          //   '<button class="btn btn-success restart">Play Again</button>'
-          // );
-          // $('.restart').on('click', function() {
-          //   location.reload();
-          // });
         }
         if (
           snapshot
@@ -393,6 +375,10 @@
             this.compare();
           }
         }
+      });
+
+      $('.btn.leave').on('click', function() {
+        location.reload();
       });
     }
   };
