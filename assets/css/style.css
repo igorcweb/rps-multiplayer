@@ -30,7 +30,7 @@ h1 {
 
 .btn.leave {
   margin-top: -20px;
-  margin-bottom: 20px;
+
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -80,6 +80,15 @@ i.game2 {
   font-size: 3rem;
   position: absolute;
   cursor: pointer;
+}
+
+i.game1:hover,
+i.game2:hover {
+  color: green;
+}
+
+.active {
+  color: green;
 }
 
 i.game1.fa-hand-rock {
