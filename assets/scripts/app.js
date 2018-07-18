@@ -98,12 +98,12 @@
       });
     },
     compare: function() {
-      setTimeout(function() {
-        $('.info').html('');
-        $('.resultIcon1').html('');
-        $('.resultIcon2').html('');
-        $('.resultIcons').addClass('d-none');
-      }, 3000);
+      // setTimeout(function() {
+      //   $('.info').html('');
+      //   $('.resultIcon1').html('');
+      //   $('.resultIcon2').html('');
+      //   $('.resultIcons').addClass('d-none');
+      // }, 3000);
       game.choice.removeClass('active');
       switch (this.choice1) {
         case 'rock':
@@ -268,8 +268,6 @@
           console.log('render is running');
           console.log('choice1: ', data.players.choice1);
           console.log('choice2: ', data.players.choice2);
-          // $('.resultIcon1').html(data.players.choice1);
-          // $('.resultIcon2').html(data.players.choice2);
           switch (data.players.choice1) {
             case 'rock':
               $('.resultIcon1').html(game.rock1);
