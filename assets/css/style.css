@@ -46,6 +46,52 @@ h1 {
   border-radius: 6px;
 }
 
+/* .resultIcon1,
+.resultIcon2 {
+  position: relative;
+} */
+
+.resultIcon1 .fa-hand-rock {
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+}
+
+.resultIcon1 .fa-hand-paper {
+  position: absolute;
+  font-size: 3rem;
+  top: 50%;
+  left: 37%;
+}
+
+.resultIcon1 .fa-hand-scissors {
+  position: absolute;
+  font-size: 3rem;
+  top: 50%;
+  left: 37%;
+}
+
+.resultIcon2 .fa-hand-rock {
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  right: 40%;
+}
+
+.resultIcon2 .fa-hand-paper {
+  font-size: 3rem;
+  position: absolute;
+  right: 33%;
+  top: 50%;
+}
+.resultIcon2 .fa-hand-scissors {
+  font-size: 3rem;
+  position: absolute;
+  right: 33%;
+  top: 50%;
+}
+
 .chatBox {
   background-color: #fff;
   height: 10rem;

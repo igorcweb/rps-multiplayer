@@ -24,13 +24,12 @@
     choice1record: '',
     choice2record: '',
     choice: '',
-    rock1: '<i class="game1 far fa-hand-rock fa-rotate-90"></i>',
-    paper1: '<i class="game1 far fa-hand-paper fa-rotate-90"></i>',
-    scissors1: '<i class="game1 far fa-hand-scissors fa-flip-horizontal"></i>',
-    rock2: '<i class="game2 far fa-hand-rock fa-rotate-270"></i>',
-    paper2: '<i class="game2 far fa-hand-paper fa-rotate-270"></i>',
-    scissors2: '<i class="game2 far fa-hand-scissors"></i>',
-
+    rock1: '<i class="far fa-hand-rock fa-rotate-90"></i>',
+    paper1: '<i class="far fa-hand-paper fa-rotate-90"></i>',
+    scissors1: '<i class="far fa-hand-scissors fa-flip-horizontal"></i>',
+    rock2: '<i class="far fa-hand-rock fa-rotate-270"></i>',
+    paper2: '<i class="far fa-hand-paper fa-rotate-270"></i>',
+    scissors2: '<i class="far fa-hand-scissors"></i>',
     init: function() {
       $('.btn.join').on('click', e => {
         e.preventDefault();
@@ -39,55 +38,71 @@
         const joinForm = $('form.join');
         let name1 = this.player1;
         let name2 = this.player2;
-        if (name1 === '') {
-          name1 = name;
-          joinForm.addClass('d-none');
-          $('button.leave').removeClass('d-none');
-          database.ref().set({
-            chat: '',
-            players: {
-              choice1: this.choice1record,
-              choice2: this.choice2record,
-              player1: {
-                name: name1,
-                choice: '',
-                wins: this.wins1,
-                losses: this.losses1
+        if (name) {
+          //add validation message later
+          if (name1 === '') {
+            name1 = name;
+            joinForm.addClass('d-none');
+            $('button.leave').removeClass('d-none');
+            database.ref().set({
+              chat: '',
+              players: {
+                choice1: this.choice1record,
+                choice2: this.choice2record,
+                player1: {
+                  name: name1,
+                  choice: '',
+                  wins: this.wins1,
+                  losses: this.losses1
+                }
               }
-            }
-          });
-          $('.rock1').html(this.rock1);
-          $('.paper1').html(this.paper1);
-          $('.scissors1').html(this.scissors1);
-        } else if (name2 === '') {
-          name2 = name;
-          joinForm.addClass('d-none');
-          $('button.leave').removeClass('d-none');
-          database.ref('/players').update({
-            player2: {
-              name: name2,
-              choice: '',
-              wins: this.wins2,
-              losses: this.losses2
-            }
-          });
+            });
 
-          database.ref().update({ turn: 1 });
+            $('.rock1').html(
+              '<i class="game1 far fa-hand-rock fa-rotate-90"></i>'
+            );
+            $('.paper1').html(
+              '<i class="game1 far fa-hand-paper fa-rotate-90"></i>'
+            );
+            $('.scissors1').html(
+              '<i class="game1 far fa-hand-scissors fa-flip-horizontal"></i>'
+            );
+          } else if (name2 === '') {
+            name2 = name;
+            joinForm.addClass('d-none');
+            $('button.leave').removeClass('d-none');
+            database.ref('/players').update({
+              player2: {
+                name: name2,
+                choice: '',
+                wins: this.wins2,
+                losses: this.losses2
+              }
+            });
 
-          $('.rock2').html(this.rock2);
-          $('.paper2').html(this.paper2);
-          $('.scissors2').html(this.scissors2);
-        } else {
-          $('.turn').html(
-            '<p>Two players are currently playing. Please wait until someone leaves.</p>'
-          );
+            database.ref().update({ turn: 1 });
+
+            $('.rock2').html(
+              '<i class="game2 far fa-hand-rock fa-rotate-270"></i>'
+            );
+            $('.paper2').html(
+              '<i class="game2 far fa-hand-paper fa-rotate-270"></i>'
+            );
+            $('.scissors2').html('<i class="game2 far fa-hand-scissors"></i>');
+          } else {
+            $('.turn').html(
+              '<p>Two players are currently playing. Please wait until someone leaves.</p>'
+            );
+          }
         }
       });
     },
     compare: function() {
-      $('.resultIcons').removeClass('d-none');
       setTimeout(function() {
         $('.info').html('');
+        $('.resultIcon1').html('');
+        $('.resultIcon2').html('');
+        $('.resultIcons').addClass('d-none');
       }, 3000);
       game.choice.removeClass('active');
       switch (this.choice1) {
@@ -237,7 +252,6 @@
         $('.chatBox').prepend(`<p class="message">${message}</p>`);
       });
     },
-
     renderChoices: function() {
       database.ref().on('value', function(snap) {
         let data = snap.val();
@@ -254,8 +268,30 @@
           console.log('render is running');
           console.log('choice1: ', data.players.choice1);
           console.log('choice2: ', data.players.choice2);
-          $('.resultIcon1').html(data.players.choice1);
-          $('.resultIcon2').html(data.players.choice2);
+          // $('.resultIcon1').html(data.players.choice1);
+          // $('.resultIcon2').html(data.players.choice2);
+          switch (data.players.choice1) {
+            case 'rock':
+              $('.resultIcon1').html(game.rock1);
+              break;
+            case 'paper':
+              $('.resultIcon1').html(game.paper1);
+              break;
+            default:
+              $('.resultIcon1').html(game.scissors1);
+              break;
+          }
+          switch (data.players.choice2) {
+            case 'rock':
+              $('.resultIcon2').html(game.rock2);
+              break;
+            case 'paper':
+              $('.resultIcon2').html(game.paper2);
+              break;
+            default:
+              $('.resultIcon2').html(game.scissors2);
+              break;
+          }
         }
       });
     },
@@ -322,9 +358,7 @@
                 .update({ choice: game.choice1 });
               $('.player1').off('click');
               database.ref().update({ turn: 2 });
-              database.ref('players').update({
-                choice1: game.choice1record
-              });
+              database.ref('players').update({ choice1: game.choice1record });
             });
           }
           if (turn === 2) {
@@ -339,9 +373,7 @@
                 .update({ choice: game.choice2 });
               $('.player2').off('click');
               database.ref().update({ turn: 1 });
-              database.ref('players').update({
-                choice2: game.choice2record
-              });
+              database.ref('players').update({ choice2: game.choice2record });
             });
           }
 
@@ -349,6 +381,7 @@
           this.choice2 = data.players.player2.choice;
 
           if (this.choice1 && this.choice2) {
+            $('.resultIcons').removeClass('d-none');
             this.compare();
           }
         }
@@ -365,25 +398,4 @@
   game.disconnect();
   game.chat();
   game.renderChoices();
-
-  // join.on('click', function(e) {
-  //   e.preventDefault();
-  //   player = nameInput.val().trim();
-  //   nameInput.val('');
-  //   console.log(numPlayers);
-  //   if (player) {
-  //     if (numPlayers < 2) {
-  //       database.ref('rps/players').push({
-  //         name: player,
-  //         wins: 0,
-  //         losses: 0
-  //       });
-  //       joinForm.addClass('d-none');
-  //     } else {
-  //       console.log(
-  //         'Two players are currently playing.  Please wait when someone leaves.'
-  //       );
-  //     }
-  //   }
-  // });
 })();
