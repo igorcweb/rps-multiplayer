@@ -98,12 +98,12 @@
       });
     },
     compare: function() {
-      // setTimeout(function() {
-      //   $('.info').html('');
-      //   $('.resultIcon1').html('');
-      //   $('.resultIcon2').html('');
-      //   $('.resultIcons').addClass('d-none');
-      // }, 3000);
+      setTimeout(function() {
+        $('.info').html('');
+        $('.resultIcon1').html('');
+        $('.resultIcon2').html('');
+        $('.resultIcons').addClass('d-none');
+      }, 3000);
       game.choice.removeClass('active');
       switch (this.choice1) {
         case 'rock':
